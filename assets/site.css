@@ -1,0 +1,160 @@
+:root {
+  --paper: #f7f4ee;
+  --paper-sheet: #fbf8f3;
+  --ink: #2b2824;
+  --ink-soft: #5c564e;
+  --line: rgba(43, 40, 36, 0.12);
+  --sage: #4f5e43;
+  --sage-wash: #e7eee0;
+  --warning: #6d3b2a;
+  --warning-wash: #f4e4d8;
+  --shadow: 0 18px 50px rgba(70, 58, 40, 0.06);
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+
+html { background: var(--paper); }
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background:
+    radial-gradient(1200px 480px at 50% -180px, rgba(174, 190, 152, 0.35), transparent 70%),
+    var(--paper);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", sans-serif;
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+a { color: var(--sage); text-underline-offset: 0.18em; }
+a:hover { color: #3c4a33; }
+
+:focus-visible {
+  outline: 2px solid var(--sage);
+  outline-offset: 3px;
+}
+
+.frame {
+  width: min(720px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 28px 0 64px;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.brand {
+  margin: 0;
+  font-family: "Iowan Old Style", Palatino, "Palatino Linotype", "Songti SC", "Noto Serif SC", serif;
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lang { display: flex; gap: 12px; font-size: 15px; }
+.lang a[aria-current="page"] { color: var(--ink); text-decoration: none; }
+
+.sheet {
+  background: var(--paper-sheet);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  padding: 28px 22px 32px;
+}
+
+.product {
+  margin: 0;
+  color: var(--sage);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 8px 0 18px;
+  font-family: "Iowan Old Style", Palatino, "Palatino Linotype", "Songti SC", "Noto Serif SC", serif;
+  font-size: clamp(34px, 6vw, 48px);
+  font-weight: 560;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.docs { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 0 0 22px; }
+.docs a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+.docs a[aria-current="page"] {
+  color: var(--ink);
+  border-bottom-color: var(--sage);
+}
+
+.banner {
+  margin: 0 0 22px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--warning-wash);
+  color: var(--warning);
+  font-size: 15px;
+}
+
+.facts {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0 0 28px;
+  padding: 16px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.facts div { display: flex; flex-direction: column; gap: 2px; }
+
+.facts dt { margin: 0; color: var(--ink-soft); }
+.facts dd { margin: 0; }
+.slot-empty {
+  color: var(--warning);
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 0.92em;
+}
+
+.prose > :first-child { margin-top: 0; }
+.prose p,
+.prose ul,
+.prose ol,
+.prose blockquote { margin: 0 0 1em; }
+.prose blockquote {
+  margin-left: 0;
+  padding-left: 14px;
+  border-left: 3px solid #c9b39a;
+  color: var(--ink-soft);
+}
+.prose h2 {
+  margin: 1.6em 0 0.4em;
+  font-size: 1.25rem;
+  font-family: "Iowan Old Style", Palatino, "Palatino Linotype", "Songti SC", serif;
+}
+.prose li + li { margin-top: 0.25em; }
+
+.foot {
+  margin: 18px 4px 0;
+  color: var(--ink-soft);
+  font-size: 14px;
+}
+
+@media (min-width: 760px) {
+  .frame { padding-top: 48px; }
+  .sheet { padding: 42px 48px 48px; border-radius: 22px; }
+}
+
+@media (max-width: 560px) {
+  .frame { width: min(720px, calc(100% - 28px)); }
+  .sheet { padding: 24px 18px 28px; }
+}
