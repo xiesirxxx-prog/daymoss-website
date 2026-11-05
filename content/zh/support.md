@@ -4,6 +4,7 @@ lang: zh
 title: 帮助与反馈
 placeholder: false
 effective_date: "2026 年 11 月 4 日"
+updated_date: "2026 年 11 月 5 日"
 contact_email: developer@yunostudio.cc
 ---
 
@@ -23,7 +24,7 @@ Daymoss 1.0 支持 iPhone，要求 iOS 26.5 或更高版本。首发面向中国
 
 手账文字及重新编码的图片副本保存在 Daymoss 沙盒的本地 Application Support 目录。Daymoss 不将其上传至开发者运营的服务器，也不提供自己的云同步功能。应用不包含分析、广告或第三方崩溃上报 SDK。
 
-根据设置，设备的 iCloud 云备份或电脑备份可能包含应用数据。设备备份不是 Daymoss 持续同步。换机或删除应用前，请检查备份安排。开发者无法从服务器恢复手账，也不保证备份一定能成功恢复。
+根据设置，设备的 iCloud 云备份或电脑备份可能包含应用数据。设备备份不是 Daymoss 持续同步。换机或删除应用前，请检查备份安排。开发者无法从服务器恢复手账，也不保证设备备份一定存在、包含全部内容或能够成功恢复。
 
 ## 照片与相机
 

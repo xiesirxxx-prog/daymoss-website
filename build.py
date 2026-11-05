@@ -24,13 +24,20 @@ CONFIRMED_EFFECTIVE_DATES = {
     "en": "November 4, 2026",
     "zh": "2026 年 11 月 4 日",
 }
+CONFIRMED_UPDATED_DATES = {
+    "en": "November 5, 2026",
+    "zh": "2026 年 11 月 5 日",
+}
+FACT_KEYS = ("effective_date", "updated_date", "contact_email")
 UNPUBLISHED_MARKERS = ("PRE-PUBLICATION", "发布前待确认")
 FIELD_LABELS = {
     "en": {
-        "effective_date": "Effective date",
+        "effective_date": "Original effective date",
+        "updated_date": "Last updated",
         "contact_email": "Contact email",
         "empty": {
-            "effective_date": "[Effective date]",
+            "effective_date": "[Original effective date]",
+            "updated_date": "[Last updated]",
             "contact_email": "[Contact email]",
         },
         "banner": "Development placeholder. Do not publish this page.",
@@ -40,9 +47,11 @@ FIELD_LABELS = {
     },
     "zh": {
         "effective_date": "生效日期",
+        "updated_date": "最后更新",
         "contact_email": "联系邮箱",
         "empty": {
             "effective_date": "[生效日期]",
+            "updated_date": "[最后更新]",
             "contact_email": "[联系邮箱]",
         },
         "banner": "开发占位页。不要公开发布本页。",
@@ -91,7 +100,7 @@ def load_pages() -> list:
             doc = parse_document(path)
             if doc.get("id") != page_id or doc.get("lang") != lang:
                 fail(f"{path} id/lang does not match its path")
-            for key in ("title", "contact_email", "effective_date"):
+            for key in ("title", "contact_email", "effective_date", "updated_date"):
                 if key not in doc:
                     fail(f"{path} is missing {key}")
             doc["href"] = page_href(lang, page_id)
@@ -110,6 +119,26 @@ def page_href(lang: str, page_id: str) -> str:
     return ""
 
 
+def embed_href(lang: str, page_id: str) -> str:
+    if lang == "en":
+        return f"/daymoss/embed/{page_id}"
+    if lang == "zh":
+        return f"/zh/daymoss/embed/{page_id}"
+    fail(f"unknown language: {lang}")
+    return ""
+
+
+def rewrite_embed_links(markup: str) -> str:
+    """Point in-body legal links at the embed presentation. The Markdown stays unchanged."""
+    for page_id in PAGES:
+        for lang in ("zh", "en"):
+            markup = markup.replace(
+                f'href="{page_href(lang, page_id)}"',
+                f'href="{embed_href(lang, page_id)}"',
+            )
+    return markup
+
+
 def release_errors(pages: list) -> list:
     errors = []
     for page in pages:
@@ -120,6 +149,11 @@ def release_errors(pages: list) -> list:
             errors.append(
                 f"{page['href']} effective date is {page['effective_date']!r}, expected {expected_date!r}"
             )
+        expected_updated = CONFIRMED_UPDATED_DATES[page["lang"]]
+        if page["updated_date"] != expected_updated:
+            errors.append(
+                f"{page['href']} last updated date is {page['updated_date']!r}, expected {expected_updated!r}"
+            )
         if page["contact_email"] != "developer@yunostudio.cc":
             errors.append(f"{page['href']} contact email is not developer@yunostudio.cc")
         for marker in UNPUBLISHED_MARKERS:
@@ -128,6 +162,9 @@ def release_errors(pages: list) -> list:
     dates = {page["effective_date"] for page in pages}
     if dates != set(CONFIRMED_EFFECTIVE_DATES.values()):
         errors.append(f"effective dates are not the confirmed pair: {sorted(dates)}")
+    updated = {page["updated_date"] for page in pages}
+    if updated != set(CONFIRMED_UPDATED_DATES.values()):
+        errors.append(f"last-updated dates are not the confirmed pair: {sorted(updated)}")
     return errors
 
 
@@ -240,9 +277,7 @@ def render_page(page: dict, pages: list) -> str:
         banner = f'<p class="banner" role="note">{html.escape(labels["banner"])}</p>'
         robots = '<meta name="robots" content="noindex, nofollow">'
         title = f"{title} — Placeholder"
-    facts = "\n".join(
-        field_html(page, key) for key in ("effective_date", "contact_email")
-    )
+    facts = "\n".join(field_html(page, key) for key in FACT_KEYS)
     return f"""<!DOCTYPE html>
 <html lang="{labels["html_lang"]}">
 <head>
@@ -285,6 +320,59 @@ def render_page(page: dict, pages: list) -> str:
 """
 
 
+def render_embed_page(page: dict, pages: list) -> str:
+    """In-app presentation of the same page. The native navigation bar supplies the visible title."""
+    labels = FIELD_LABELS[page["lang"]]
+    other_lang = "zh" if page["lang"] == "en" else "en"
+    counterpart = next(
+        embed_href(item["lang"], item["id"])
+        for item in pages
+        if item["lang"] == other_lang and item["id"] == page["id"]
+    )
+    current = embed_href(page["lang"], page["id"])
+    banner = ""
+    robots = ""
+    title = html.escape(page["title"])
+    if page["placeholder"]:
+        banner = f'<p class="banner" role="note">{html.escape(labels["banner"])}</p>'
+        robots = '<meta name="robots" content="noindex, nofollow">'
+        title = f"{title} — Placeholder"
+    current_label = "English" if page["lang"] == "en" else "中文"
+    facts = "\n".join(field_html(page, key) for key in FACT_KEYS)
+    prose = rewrite_embed_links(render_markdown(page["body"]))
+    return f"""<!DOCTYPE html>
+<html lang="{labels["html_lang"]}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  {robots}
+  <title>{title} — Daymoss</title>
+  <link rel="canonical" href="{page["href"]}">
+  <link rel="stylesheet" href="/assets/site.css">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+</head>
+<body class="embed">
+  <div class="embed-frame">
+    <main>
+      <h1 class="document-title">{html.escape(page["title"])}</h1>
+      <nav class="lang" aria-label="{html.escape(labels["language_nav"])}">
+        <a href="{current}" aria-current="page">{current_label}</a>
+        <a href="{counterpart}" lang="{FIELD_LABELS[other_lang]["html_lang"]}">{html.escape(labels["other_lang"])}</a>
+      </nav>
+      {banner}
+      <dl class="facts">
+        {facts}
+      </dl>
+      <div class="prose">
+        {prose}
+      </div>
+    </main>
+  </div>
+</body>
+</html>
+"""
+
+
 def write_site(pages: list, release: bool) -> None:
     if DIST.exists():
         shutil.rmtree(DIST)
@@ -294,6 +382,9 @@ def write_site(pages: list, release: bool) -> None:
         destination = DIST / page["href"].lstrip("/") / "index.html"
         destination.parent.mkdir(parents=True, exist_ok=True)
         destination.write_text(render_page(page, pages), encoding="utf-8")
+        embed_destination = DIST / embed_href(page["lang"], page["id"]).lstrip("/") / "index.html"
+        embed_destination.parent.mkdir(parents=True, exist_ok=True)
+        embed_destination.write_text(render_embed_page(page, pages), encoding="utf-8")
     if release:
         (DIST / "robots.txt").write_text("User-agent: *\nAllow: /\n", encoding="utf-8")
         (DIST / "CNAME").write_text("yunostudio.cc\n", encoding="utf-8")

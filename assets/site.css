@@ -158,3 +158,44 @@ h1 {
   .frame { width: min(720px, calc(100% - 28px)); }
   .sheet { padding: 24px 18px 28px; }
 }
+
+/* In-app presentation. The native bar is the visible title; the h1 stays in the document. */
+body.embed {
+  background: var(--paper);
+  font: -apple-system-body;
+  overflow-wrap: break-word;
+}
+
+.embed-frame {
+  position: relative;
+  width: min(40rem, 100%);
+  margin: 0 auto;
+  padding: 12px 20px calc(28px + env(safe-area-inset-bottom, 0px));
+}
+
+body.embed .document-title {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+body.embed .lang {
+  flex-wrap: wrap;
+  margin: 0 0 8px;
+  font: -apple-system-subheadline;
+}
+
+body.embed .prose h2 {
+  font: -apple-system-title3;
+  margin: 1.15em 0 0.35em;
+}
+
+body.embed a {
+  overflow-wrap: anywhere;
+}

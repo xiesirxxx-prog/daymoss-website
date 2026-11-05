@@ -4,6 +4,7 @@ lang: en
 title: Support
 placeholder: false
 effective_date: "November 4, 2026"
+updated_date: "November 5, 2026"
 contact_email: developer@yunostudio.cc
 ---
 
@@ -23,7 +24,7 @@ Version 1.0 does not require an account or sign-in and has no subscriptions or i
 
 Journal text and re-encoded image copies are stored in the local Application Support directory within Daymoss’s sandbox. Daymoss does not upload them to a developer-operated server or provide its own cloud sync. It contains no analytics, advertising, or third-party crash-reporting SDKs.
 
-Your device’s iCloud or computer backup may include app data depending on your settings. A device backup is not continuous Daymoss sync. Before changing phones or deleting the app, check your backup arrangements. The developer cannot recover journals from a server, and successful backup restoration is not guaranteed.
+Your device’s iCloud or computer backup may include app data depending on your settings. A device backup is not continuous Daymoss sync. Before changing phones or deleting the app, check your backup arrangements. The developer cannot recover journals from a server and does not guarantee that a device backup exists, contains all content, or can be restored successfully.
 
 ## Photos and the camera
 

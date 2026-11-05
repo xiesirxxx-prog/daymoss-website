@@ -1,6 +1,8 @@
 # Deployment plan
 
-Do not change DNS and do not upload the site while `placeholder: true` remains. `python3 build.py --release` refuses that tree. The effective date is November 4, 2026, shown as `2026 年 11 月 4 日` on the Chinese pages. The page brand is Daymoss.
+Do not change DNS, mail records, or the custom domain for a content update. `python3 build.py --release` refuses a tree that is still `placeholder: true`. The original effective date is November 4, 2026 (`2026 年 11 月 4 日`). The last-updated date is November 5, 2026 (`2026 年 11 月 5 日`). The page brand is Daymoss.
+
+The site is already published. The next content update replaces the generated HTML only, after the merged Markdown is confirmed. Do not upload before that confirmation.
 
 ## Recommendation
 
@@ -23,13 +25,13 @@ Checked on 4 November 2026. Do not edit or delete them:
 | `@` | TXT | `v=spf1 include:spf.qiye.aliyun.com -all` |
 | `default._domainkey` | TXT | existing DKIM key |
 
-There is no apex A or AAAA record today, and no CAA record. Do not add a CAA record unless it allows Let’s Encrypt (`letsencrypt.org`). A restrictive CAA record would stop GitHub Pages from issuing the certificate.
+The apex already serves the site. Do not add, replace, or delete A, AAAA, NS, MX, SPF, or DKIM records for a content update. Do not add a CAA record unless it allows Let’s Encrypt (`letsencrypt.org`). A restrictive CAA record would stop GitHub Pages from renewing the certificate.
 
 Do not put a CNAME on `@`. Do not add a wildcard such as `*`.
 
-## Records to add later
+## Records already used for the first publication
 
-Add these only after `--release` succeeds and the GitHub Pages custom domain is saved as `yunostudio.cc`. GitHub’s own order is: add the custom domain on the repository first, then create the DNS records. Pointing the domain at GitHub before the repository claims it creates a takeover risk. Leave the records uncreated while the placeholder is still in the files.
+The records below are the original GitHub Pages addresses. They are already in place. Do not create them again for the November 5 text update.
 
 | Host | Type | Value |
 | --- | --- | --- |
@@ -52,6 +54,15 @@ After the records propagate, enable Enforce HTTPS in the Pages settings. Certifi
 - `https://yunostudio.cc/zh/daymoss/privacy`
 - `https://yunostudio.cc/zh/daymoss/terms`
 - `https://yunostudio.cc/zh/daymoss/support`
+
+The in-app presentation is published beside those paths. It uses the same Markdown and does not replace the six pages above:
+
+- `https://yunostudio.cc/daymoss/embed/privacy`
+- `https://yunostudio.cc/daymoss/embed/terms`
+- `https://yunostudio.cc/daymoss/embed/support`
+- `https://yunostudio.cc/zh/daymoss/embed/privacy`
+- `https://yunostudio.cc/zh/daymoss/embed/terms`
+- `https://yunostudio.cc/zh/daymoss/embed/support`
 
 Publish the `dist/` directory produced by `--release` only. Do not publish a preview build. Preview builds include `PLACEHOLDER_DO_NOT_PUBLISH.txt` and a `robots.txt` that disallows the whole site; those markers are not a substitute for keeping the files offline.
 
@@ -85,4 +96,4 @@ Do not add application source, signing files, archives, backups, or private revi
 
 The privacy policy states that GitHub Pages logs and stores visitors’ IP addresses, and that support email is processed through Alibaba Mail. It does not claim that the website has no logs, and it does not name a mailbox storage location.
 
-In the repository’s Pages setting, choose GitHub Actions as the source. Set the custom domain to `yunostudio.cc` before adding the DNS records above. Then enable Enforce HTTPS once GitHub offers it. The six public URLs come from `dist/`. CSS and the icon are local files, with no site-added analytics script. HTTPS is not active yet because the DNS records above have not been added.
+The custom domain and HTTPS are already in place. Do not change them for this content update. After the merged text is confirmed, publish a new `dist/` from `python3 build.py --release` through the existing GitHub Actions workflow. CSS and the icon are local files, with no site-added analytics script.

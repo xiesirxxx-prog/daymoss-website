@@ -4,6 +4,7 @@ lang: en
 title: Terms of Use
 placeholder: false
 effective_date: "November 4, 2026"
+updated_date: "November 5, 2026"
 contact_email: developer@yunostudio.cc
 ---
 
@@ -29,6 +30,14 @@ You retain the rights you hold in the journal text and images you add. You are r
 
 The app processes your content locally to provide its journaling functions. It does not upload journal content to a developer-operated server. Protect other people’s privacy when using their photos or information. Use of the app must respect the applicable license and other people’s legal rights.
 
+## Lawful use
+
+Daymoss 1.0 is a local journal. It does not publish journals to other people, and the developer cannot review or remotely delete them.
+
+Use the app lawfully. Do not use it to create, store, or distribute child sexual abuse material, intimate imagery of another person without their consent, or other content that infringes someone’s rights or is prohibited by applicable law. Do not use it to threaten or harass another person, commit fraud, or distribute malware.
+
+If you share content through another app or channel, you remain responsible for that sharing. This section does not give the developer access to local journals, exempt the developer from legal responsibility, or limit rights that cannot lawfully be excluded.
+
 ## Local storage, deletion, and backups
 
 Journal text and re-encoded image copies are stored in the local Application Support directory within the app sandbox. Re-encoding does not guarantee removal of all photo metadata. Apple’s device backups may include this data depending on your settings; this is not app-provided cloud sync.
@@ -49,7 +58,7 @@ Contact [developer@yunostudio.cc](mailto:developer@yunostudio.cc) for support or
 
 Software can contain errors, and device or system changes may affect operation. Any warranty or liability provisions in the applicable EULA remain subject to mandatory consumer law. This page adds no blanket waiver of the developer’s legal responsibility.
 
-These terms may be updated to reflect changes to the app or legal requirements. Updates will be published with a revised effective date, and further notice or consent will be provided where required. Updates do not retroactively remove accrued rights.
+These terms may be updated to reflect changes to the app or legal requirements. Updates will be published on this page, and the last-updated date above will be revised. If a change does not take effect on the effective date shown above, that different effective date will be stated. Further notice or consent will be provided where required. Updates do not retroactively remove accrued rights.
 
 ## Developer details, applicable law, and language
 
