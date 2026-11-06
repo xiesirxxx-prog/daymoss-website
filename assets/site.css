@@ -193,6 +193,7 @@ body.embed .lang {
 
 body.embed .prose h2 {
   font: -apple-system-title3;
+  font-weight: 700;
   margin: 1.15em 0 0.35em;
 }
 

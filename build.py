@@ -285,7 +285,7 @@ def render_page(page: dict, pages: list) -> str:
   <meta name="viewport" content="width=device-width, initial-scale=1">
   {robots}
   <title>{title} — Daymoss</title>
-  <link rel="stylesheet" href="/assets/site.css">
+  <link rel="stylesheet" href="/assets/site.css?v=2">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -348,7 +348,7 @@ def render_embed_page(page: dict, pages: list) -> str:
   {robots}
   <title>{title} — Daymoss</title>
   <link rel="canonical" href="{page["href"]}">
-  <link rel="stylesheet" href="/assets/site.css">
+  <link rel="stylesheet" href="/assets/site.css?v=2">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 </head>
 <body class="embed">
